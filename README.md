@@ -1,5 +1,5 @@
 # product-alternatives
-This is a section for product pages on Shopify which requires a private app to be created and access to the storefront API.
+This is a section for product pages on Shopify which requires a private app to be created and access to the Storefront API it uses GraphQL to pull products from the Storefront API.
 
 - FLOW -
 Section won't show unless the checkbox defined under ID "show_recommendations_on_type" is ticked
