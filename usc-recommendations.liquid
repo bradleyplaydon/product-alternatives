@@ -10,14 +10,6 @@
 {% endif %}
 {% endfor %}
 {% if section.settings.show_recommendations_on_type and showalt == true and product.available != true and sizetagExst == true %}
-
-<section class="section" data-section-id="{{ section.id }}" data-section-type="usc-recommendations">
-<div class="card">
-  <div class="card__header"><h2 class="card__title heading h3">{{section.settings.section_title}}</h2></div>
- <div class="product-alternatives">
- </div>
-</div>
-</section>
 <style>
     .image-wrapper {
         height: 170px;
@@ -25,6 +17,8 @@
 </style>
 <script>
 $(document).ready(function(){
+    var sectionTitle = "{{ section.settings.section_title }}";
+    $('#brad-alternatives').append("<div class='card'><div class='card__header'><h2 class='card__title heading h3'>"+sectionTitle+"</h2></div><div class='brad-alternatives'></div></div>");
     var productAvailable = {{ product.available }};
      var thisProdType = "{{ product.type }}"; 
     {% for variant in product.variants %}
@@ -47,7 +41,7 @@ $(document).ready(function(){
     {% endif %}
     {% endfor %}
     var limittoshow = {{ section.settings.num_recommendations_to_show }};                     
-    var loopCount;
+    var loopCount = 0;
   $.ajax({
   type : 'POST',
   url : '/api/2020-07/graphql.json',
@@ -129,7 +123,7 @@ $(document).ready(function(){
         var variantInventory = productS[prod].node.variants.edges[variant].node.quantityAvailable;
         }
         for(var img in productS[prod].node.images.edges){
-         var prodImages = productS[prod].node.images.edges[img].node.src; 
+         var prodImages = productS[prod].node.images.edges[0].node.src; 
         }
         for(var option in productS[prod].node.options){
          var productSizeOption = productS[prod].node.options[option].name;
@@ -154,7 +148,7 @@ $(document).ready(function(){
          if(thisProdType == productType && thisProdSKU != variantSku && productAvailable != true && similarProd == true && variantInventory > 0 || thisProdType == productType && thisProdSKU != variantSku && productAvailable != true && variantInventory > 0 && RightSizes == true){
         loopCount++;
              
-      $('.product-alternatives').append("<div class='product-form__info-item'><div><div class='image-wrapper'><a href="+"/products/"+productHandle+"><img src="+prodImages+"/></a></div><div class='product-item__info'><div class='product-item__info-inner'><div class='product-item__price-list price-list'><span class='price'>£"+variantPrice+"<span style='font-size:12px;'>Exc VAT</span></span></div></div><a class='product-item__title' href="+"/products/"+productHandle+">"+productTitle+"</a></div></div><form method='post' action='/cart/add' id='usc-recommendations' accept-charset='UTF-8' class='product-item__action-list button-stack' encytype='multipart/form-data'><input type='hidden' name='quantity' value='1'><input type='hidden' name='id' value="+variantID+"><button type='submit' value="+variantID+" class='product-item__action-button usc-add button button--small button--primary' data-action='add-to-cart'>Add to cart</button> </form></div>");
+      $('#brad-alternatives > .card > .brad-alternatives').append("<div class='product-form__info-item'><div><div class='image-wrapper'><a href="+"/products/"+productHandle+"><img src="+prodImages+"/></a></div><div class='product-item__info'><div class='product-item__info-inner'><div class='product-item__price-list price-list'><span class='price'>£"+variantPrice+"<span style='font-size:12px;'>Exc VAT</span></span></div></div><a class='product-item__title' href="+"/products/"+productHandle+">"+productTitle+"</a></div></div><form method='post' action='/cart/add' id='usc-recommendations' accept-charset='UTF-8' class='product-item__action-list button-stack' encytype='multipart/form-data'><input type='hidden' name='quantity' value='1'><input type='hidden' name='id' value="+variantID+"><button type='submit' value="+variantID+" class='product-item__action-button usc-add button button--small button--primary' data-action='add-to-cart'>Add to cart</button> </form></div>");
              
       }
         }
@@ -206,12 +200,12 @@ $(document).ready(function(){
     
 </script>
 <style>
-  .product-alternatives {
+  .brad-alternatives {
    display: flex; 
    flex-wrap:wrap;
    justify-content:center;
   }
-  .product-alternatives > .product-form__info-item {
+  .brad-alternatives > .product-form__info-item {
    width:165px; 
    padding:10px;
   }
