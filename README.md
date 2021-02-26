@@ -3,7 +3,7 @@ This is a section for product pages on Shopify which requires a private app to b
 ## Contents 
   * Worklow
   * Usage
-
+  * Future Updates
 
 ## Workflow 
   1. Section won't show unless the checkbox defined under ID "show_recommendations_on_type" is ticked
@@ -17,3 +17,6 @@ This is a section for product pages on Shopify which requires a private app to b
 3. Go to your templates and click product.liquid 
 4. Where abouts in the product page you would like the section to show make sure to reference the section in this template {% section 'your-name-for-the-section' %}
 5. Define and customize this section within the customize area
+
+## Future Updates
+In the future I plan on developing the product alternatives section out more so that it is super easy for anyone to integrate with there own shopify store I will create the instructions on how it works and also redevelop it more so it's more of an out of the box solution.
